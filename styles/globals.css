@@ -16,12 +16,32 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+button,
+select {
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+select {
+  min-width: 200px;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  font-size: 25px;
+}
+
+span {
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.highcharts-credits {
+  display: none;
 }
