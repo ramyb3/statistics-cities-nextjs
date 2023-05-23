@@ -15,7 +15,7 @@ export default function MainPage() {
 
   useEffect(() => {
     const getCities = async () => {
-      await sendMail();
+      await sendMail("Site Enter");
 
       try {
         const resp = await getData();
@@ -42,7 +42,7 @@ export default function MainPage() {
     }
 
     getCities();
-    
+
     // eslint-disable-next-line
   }, []);
 

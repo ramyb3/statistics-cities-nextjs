@@ -10,7 +10,7 @@ import {
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Tooltip } from "@mui/material";
 import Compare from "./compare";
-import { parseCity, sortByKey, tableData } from "./utils";
+import { parseCity, sendMail, sortByKey, tableData } from "./utils";
 
 export default function TopLayout() {
   const [allData, setData] = useAtom(allDataAtom);
@@ -33,13 +33,20 @@ export default function TopLayout() {
             setDisplay(true);
             setCompared([]);
             setSearch("");
+            sendMail("Show All Cities");
           }}
         >
           כל היישובים
         </button>
       </TooltipWrapper>
       <TooltipWrapper title="לעבור בין תצוגות" open={tooltip.step2}>
-        <button className="bg-[#afeeee]" onClick={() => setDisplay(!display)}>
+        <button
+          className="bg-[#afeeee]"
+          onClick={() => {
+            setDisplay(!display);
+            sendMail(`תצוגת ${display ? "גרף" : "טבלה"}`);
+          }}
+        >
           תצוגת {!display ? "גרף" : "טבלה"}
         </button>
       </TooltipWrapper>
@@ -85,6 +92,7 @@ export function TableTitles() {
                 onClick={() => {
                   orderTable(header.onClick);
                   setOrder(!order);
+                  sendMail(`ארגון לפי ${header.onClick}`);
                 }}
               >
                 {header.text}
@@ -102,10 +110,11 @@ export function TableItems({ cityData }: { cityData: any }) {
   const setCompared = useSetAtom(comparedAtom);
   const setDisplay = useSetAtom(displayAtom);
 
-  const getCity = (city: string) => {
+  const getCity = async (city: string) => {
     setData(allData.filter((obj: any) => obj[tableData[0].onClick] === city));
     setDisplay(false);
     setCompared([]);
+    await sendMail(`לחיצה על עיר בטבלה- ${city}`);
   };
 
   return (
@@ -158,7 +167,10 @@ export function TooltipWrapper({
 export function ButtonsSearch({ city }: { city: string }) {
   return (
     <div className="flex mt-12 justify-evenly">
-      <button className="p-2.5 bg-[#b0e0e6] rounded-2xl">
+      <button
+        className="p-2.5 bg-[#b0e0e6] rounded-2xl"
+        onClick={() => sendMail(`נדל"ן- ${city}`)}
+      >
         <a
           href={`https://www.nadlan.gov.il/?search=${parseCity(city)}`}
           target="_blank"
@@ -166,7 +178,10 @@ export function ButtonsSearch({ city }: { city: string }) {
           חיפוש עסקאות נדל{'"'}ן ביישוב
         </a>
       </button>
-      <button className="p-2.5 bg-[#b0e0e6] rounded-2xl">
+      <button
+        className="p-2.5 bg-[#b0e0e6] rounded-2xl"
+        onClick={() => sendMail(`גוגל- ${city}`)}
+      >
         <a href={`https://www.google.co.il/search?q=${city}`} target="_blank">
           חיפוש היישוב בגוגל
         </a>
@@ -191,7 +206,7 @@ function Search() {
     }
   }, [search]);
 
-  const searchCity = () => {
+  const searchCity = async () => {
     if (search !== "") {
       const list = apiData.filter((city: any) =>
         city[tableData[0].onClick].includes(search)
@@ -203,6 +218,8 @@ function Search() {
         setCompared([]);
         setData(list);
       }
+
+      await sendMail(`חיפוש- ${search}`);
     } else {
       alert("נא להקליד יישוב בשביל לקבל תוצאה!");
     }

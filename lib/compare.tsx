@@ -11,7 +11,7 @@ import {
   searchAtom,
   tooltipAtom,
 } from "./atoms";
-import { sortByKey, tableData } from "./utils";
+import { sendMail, sortByKey, tableData } from "./utils";
 
 type OptionType = {
   value: string;
@@ -48,7 +48,7 @@ export default function Compare() {
     // eslint-disable-next-line
   }, [open]);
 
-  const compareCities = () => {
+  const compareCities = async () => {
     if (values.length < 2) {
       alert("נא לבחור לפחות 2 יישובים בשביל לקבל תוצאה!");
       return;
@@ -73,12 +73,19 @@ export default function Compare() {
     setCompared(cities);
     setData(arr);
     setOpen(false);
+    await sendMail(`Cities To Compare ${JSON.stringify(cities)}`);
   };
 
   return (
     <>
       <TooltipWrapper title="ניתן להשוות עד 5 יישובים" open={tooltip.step3}>
-        <button onClick={() => setOpen(true)} className="bg-[#d8bfd8]">
+        <button
+          onClick={() => {
+            setOpen(true);
+            sendMail("Compare Cities");
+          }}
+          className="bg-[#d8bfd8]"
+        >
           השוואה בין יישובים
         </button>
       </TooltipWrapper>

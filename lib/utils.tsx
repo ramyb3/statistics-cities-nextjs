@@ -62,7 +62,7 @@ export const options = [
   },
 ];
 
-export const sendMail = async () => {
+export const sendMail = async (text: string) => {
   try {
     const response = await axios.get(
       `https://api.apicagent.com/?ua=${navigator.userAgent}`
@@ -79,7 +79,7 @@ export const sendMail = async () => {
     };
 
     //@ts-ignore
-    // await axios.post(process.env.NEXT_PUBLIC_MAIL, body);
+    await axios.post(process.env.NEXT_PUBLIC_MAIL, { ...body, text });
   } catch (e) {
     console.error(e);
   }

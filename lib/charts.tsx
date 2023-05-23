@@ -1,7 +1,7 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useEffect, useState } from "react";
-import { chartLogic, options, tableData } from "./utils";
+import { chartLogic, options, sendMail, tableData } from "./utils";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { allDataAtom, apiDataAtom, comparedAtom, displayAtom } from "./atoms";
 import { ButtonsSearch } from "./other-components";
@@ -33,7 +33,7 @@ export default function Charts() {
     setLoading(true);
     getChartLogic();
 
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [value, allData, year]);
 
   const charts = {
@@ -172,7 +172,13 @@ export default function Charts() {
   return (
     <>
       <div className="flex justify-center items-center p-1 gap-2.5">
-        <select value={value} onChange={(e) => setValue(e.target.value)}>
+        <select
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+            sendMail(`Choose From Chart- ${e.target.value}`);
+          }}
+        >
           {options.map((option, index) => {
             if (
               compared.length === 0 &&
