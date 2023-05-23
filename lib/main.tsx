@@ -22,24 +22,24 @@ export default function MainPage() {
 
         setAPIData(resp[0]);
         setData(resp[1]);
+
+        for (
+          let i = 0, time = 0;
+          i < Object.keys(tooltip).length;
+          i++, time += 2500
+        ) {
+          setTimeout(() => {
+            setTooltip({
+              ...tooltip,
+              [`step${i + 1}`]: true,
+              [`step${i + 2}`]: false,
+            });
+          }, time);
+        }
       } catch (e) {
         alert("שגיאה בקבלת הנתונים!");
       }
     };
-
-    for (
-      let i = 0, time = 0;
-      i < Object.keys(tooltip).length;
-      i++, time += 2500
-    ) {
-      setTimeout(() => {
-        setTooltip({
-          ...tooltip,
-          [`step${i + 1}`]: true,
-          [`step${i + 2}`]: false,
-        });
-      }, time);
-    }
 
     getCities();
 

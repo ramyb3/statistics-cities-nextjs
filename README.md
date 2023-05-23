@@ -1,4 +1,4 @@
-# Statistics In Cities of Israel
+# Statistical data on Israel's cities
 
 ## Getting Started
 
