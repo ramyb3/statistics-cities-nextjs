@@ -6,6 +6,7 @@ export default function Index() {
     <>
       <Head>
         <title>נתונים סטטיסטיים בישראל לפי יישוב</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.5" />
       </Head>
       <MainPage />
     </>

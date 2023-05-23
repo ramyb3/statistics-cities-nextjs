@@ -15,7 +15,7 @@ export default function MainPage() {
 
   useEffect(() => {
     const getCities = async () => {
-      // await sendMail();
+      await sendMail();
 
       try {
         const resp = await getData();
@@ -46,10 +46,13 @@ export default function MainPage() {
 
   return (
     <>
+      <header className="text-center text-[#8b0000] font-bold">
+        *המידע מתעדכן אחת לשבוע ע"י המדינה*
+      </header>
       <TopLayout />
 
       {display ? (
-        <table className="text-center m-auto mb-1">
+        <table className="text-center mb-2 m-auto text-lg">
           <TableTitles />
 
           {allData.map((city: any, index: number) => {

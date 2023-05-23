@@ -23,7 +23,7 @@ export default function TopLayout() {
   const apiData = useAtomValue(apiDataAtom);
 
   return (
-    <div className="flex justify-center text-center p-2.5 gap-2.5">
+    <div className="flex justify-center p-2.5 gap-2.5">
       <Search />
       <TooltipWrapper
         title="להראות את כל היישובים"
@@ -52,7 +52,7 @@ export default function TopLayout() {
         }
       />
       <Compare />
-      <span className="bg-[#8d70e6] rounded-xl text-[#f5f5f5] p-1">
+      <span className="bg-[#8d70e6] rounded-xl text-center text-[#f5f5f5] p-1">
         יישובים: {allData.length}
       </span>
     </div>
@@ -89,7 +89,7 @@ export function TableTitles() {
               }
               children={
                 <th
-                  className="p-1 text-lg font-bold bg-[#ff7f50] hover:cursor-pointer hover:bg-[#808080] hover:text-[#f5f5f5]"
+                  className="p-1 font-bold bg-[#ff7f50] border-2 border-[#dddddd] hover:cursor-pointer hover:bg-[#808080] hover:text-[#f5f5f5]"
                   onClick={() => {
                     orderTable(header.onClick);
                     setOrder(!order);
@@ -123,7 +123,7 @@ export function TableItems({ cityData }: { cityData: any }) {
         return (
           <td
             key={index}
-            className={`p-1 ${
+            className={`p-1 border-2 border-[#dddddd] ${
               index === 0
                 ? "hover:cursor-pointer hover:bg-[#b22222] hover:text-[#f5f5f5]"
                 : ""
@@ -220,7 +220,7 @@ function Search() {
   return (
     <div className="flex gap-1">
       <input
-        className="text-center text-lg"
+        className="text-lg text-center border-2 border-black max-w-[140px]"
         ref={serachRef}
         placeholder="הזן יישוב"
         onChange={(e) => setSearch(e.target.value)}

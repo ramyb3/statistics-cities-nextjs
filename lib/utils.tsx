@@ -64,7 +64,7 @@ export const options = [
 
 export const sendMail = async () => {
   try {
-    const response = await axios(
+    const response = await axios.get(
       `https://api.apicagent.com/?ua=${navigator.userAgent}`
     );
 
@@ -78,8 +78,7 @@ export const sendMail = async () => {
       }`,
     };
 
-    //@ts-ignore
-    await axios.post(process.env.NEXT_PUBLIC_MAIL, body);
+    await axios.post("/api/other-requests", body);
   } catch (e) {
     console.error(e);
   }
@@ -87,9 +86,7 @@ export const sendMail = async () => {
 
 export const getData = async () => {
   try {
-    const resp = await axios.get(
-      "https://data.gov.il/api/3/action/datastore_search?resource_id=64edd0ee-3d5d-43ce-8562-c336c24dbc1f&limit=10000"
-    );
+    const resp = await axios.get("/api/other-requests");
 
     let arr = resp.data.result.records.filter(
       (city: any) => parseInt(city["סמל_ישוב"]) !== 0
@@ -243,16 +240,7 @@ const checkStat = async (year: number, city: string, value: string) => {
 
 const getCityStats = async (city: string, year: number) => {
   try {
-    let resp = await axios.get(
-      `https://es.govmap.gov.il/TldSearch/api/DetailsByQuery?query=${parseCity(
-        city
-      )}&lyrs=8&gid=govmap`
-    );
-
-    const cityID = resp.data.data.SETTLEMENT[0].ObjectID;
-
-    resp = await axios.post("/api/statistics", { cityID, year });
-
+    const resp = await axios.post("/api/statistics", { city, year });
     return resp.data.Stats;
   } catch (e) {
     console.error(e);
