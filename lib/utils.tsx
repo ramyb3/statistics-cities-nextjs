@@ -78,7 +78,8 @@ export const sendMail = async () => {
       }`,
     };
 
-    await axios.post("/api/other-requests", body);
+    //@ts-ignore
+    await axios.post(process.env.NEXT_PUBLIC_MAIL, body);
   } catch (e) {
     console.error(e);
   }
@@ -86,7 +87,7 @@ export const sendMail = async () => {
 
 export const getData = async () => {
   try {
-    const resp = await axios.get("/api/other-requests");
+    const resp = await axios.get("/api/requests");
 
     let arr = resp.data.result.records.filter(
       (city: any) => parseInt(city["סמל_ישוב"]) !== 0
@@ -240,7 +241,7 @@ const checkStat = async (year: number, city: string, value: string) => {
 
 const getCityStats = async (city: string, year: number) => {
   try {
-    const resp = await axios.post("/api/statistics", { city, year });
+    const resp = await axios.post("/api/requests", { city, year });
     return resp.data.Stats;
   } catch (e) {
     console.error(e);
