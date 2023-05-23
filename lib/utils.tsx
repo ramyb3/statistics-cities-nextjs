@@ -79,7 +79,7 @@ export const sendMail = async () => {
     };
 
     //@ts-ignore
-    await axios.post(process.env.NEXT_PUBLIC_MAIL, body);
+    // await axios.post(process.env.NEXT_PUBLIC_MAIL, body);
   } catch (e) {
     console.error(e);
   }
@@ -87,7 +87,7 @@ export const sendMail = async () => {
 
 export const getData = async () => {
   try {
-    const resp = await axios.get("/api/requests");
+    const resp = await axios.get("/api/all-data");
 
     let arr = resp.data.result.records.filter(
       (city: any) => parseInt(city["סמל_ישוב"]) !== 0
