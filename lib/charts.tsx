@@ -32,6 +32,8 @@ export default function Charts() {
 
     setLoading(true);
     getChartLogic();
+
+  // eslint-disable-next-line
   }, [value, allData, year]);
 
   const charts = {
@@ -202,7 +204,7 @@ export default function Charts() {
               );
             })}
           </select>
-          <div>**מידע שהוא לא דמוגרפי מתעדכן אחת לרבעון ע"י המדינה**</div>
+          <div>**מידע שהוא לא דמוגרפי מתעדכן אחת לרבעון ע{'"'}י המדינה**</div>
         </div>
       ) : null}
 

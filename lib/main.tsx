@@ -42,12 +42,14 @@ export default function MainPage() {
     }
 
     getCities();
+    
+    // eslint-disable-next-line
   }, []);
 
   return (
     <>
       <header className="text-center text-[#8b0000] font-bold">
-        *המידע מתעדכן אחת לשבוע ע"י המדינה*
+        *המידע מתעדכן אחת לשבוע ע{'"'}י המדינה*
       </header>
       <TopLayout />
 

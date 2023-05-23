@@ -44,6 +44,8 @@ export default function Compare() {
     }
 
     setValues([]);
+
+    // eslint-disable-next-line
   }, [open]);
 
   const compareCities = () => {
@@ -75,15 +77,11 @@ export default function Compare() {
 
   return (
     <>
-      <TooltipWrapper
-        title="ניתן להשוות עד 5 יישובים"
-        open={tooltip.step3}
-        children={
-          <button onClick={() => setOpen(true)} className="bg-[#d8bfd8]">
-            השוואה בין יישובים
-          </button>
-        }
-      />
+      <TooltipWrapper title="ניתן להשוות עד 5 יישובים" open={tooltip.step3}>
+        <button onClick={() => setOpen(true)} className="bg-[#d8bfd8]">
+          השוואה בין יישובים
+        </button>
+      </TooltipWrapper>
 
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
         <div className="flex flex-col items-center p-1 gap-4">

@@ -25,32 +25,24 @@ export default function TopLayout() {
   return (
     <div className="flex justify-center p-2.5 gap-2.5">
       <Search />
-      <TooltipWrapper
-        title="להראות את כל היישובים"
-        open={tooltip.step1}
-        children={
-          <button
-            className="bg-[#f5f5dc]"
-            onClick={() => {
-              setData(apiData);
-              setDisplay(true);
-              setCompared([]);
-              setSearch("");
-            }}
-          >
-            כל היישובים
-          </button>
-        }
-      />
-      <TooltipWrapper
-        title="לעבור בין תצוגות"
-        open={tooltip.step2}
-        children={
-          <button className="bg-[#afeeee]" onClick={() => setDisplay(!display)}>
-            תצוגת {!display ? "גרף" : "טבלה"}
-          </button>
-        }
-      />
+      <TooltipWrapper title="להראות את כל היישובים" open={tooltip.step1}>
+        <button
+          className="bg-[#f5f5dc]"
+          onClick={() => {
+            setData(apiData);
+            setDisplay(true);
+            setCompared([]);
+            setSearch("");
+          }}
+        >
+          כל היישובים
+        </button>
+      </TooltipWrapper>
+      <TooltipWrapper title="לעבור בין תצוגות" open={tooltip.step2}>
+        <button className="bg-[#afeeee]" onClick={() => setDisplay(!display)}>
+          תצוגת {!display ? "גרף" : "טבלה"}
+        </button>
+      </TooltipWrapper>
       <Compare />
       <span className="bg-[#8d70e6] rounded-xl text-center text-[#f5f5f5] p-1">
         יישובים: {allData.length}
@@ -87,18 +79,17 @@ export function TableTitles() {
                 (tooltip.step4 && index === 0) ||
                 (tooltip.step5 && index === tableData.length - 1)
               }
-              children={
-                <th
-                  className="p-1 font-bold bg-[#ff7f50] border-2 border-[#dddddd] hover:cursor-pointer hover:bg-[#808080] hover:text-[#f5f5f5]"
-                  onClick={() => {
-                    orderTable(header.onClick);
-                    setOrder(!order);
-                  }}
-                >
-                  {header.text}
-                </th>
-              }
-            />
+            >
+              <th
+                className="p-1 font-bold bg-[#ff7f50] border-2 border-[#dddddd] hover:cursor-pointer hover:bg-[#808080] hover:text-[#f5f5f5]"
+                onClick={() => {
+                  orderTable(header.onClick);
+                  setOrder(!order);
+                }}
+              >
+                {header.text}
+              </th>
+            </TooltipWrapper>
           );
         })}
       </tr>
@@ -172,7 +163,7 @@ export function ButtonsSearch({ city }: { city: string }) {
           href={`https://www.nadlan.gov.il/?search=${parseCity(city)}`}
           target="_blank"
         >
-          חיפוש עסקאות נדל"ן ביישוב
+          חיפוש עסקאות נדל{'"'}ן ביישוב
         </a>
       </button>
       <button className="p-2.5 bg-[#b0e0e6] rounded-2xl">
