@@ -4,6 +4,7 @@ import {
   apiDataAtom,
   comparedAtom,
   displayAtom,
+  mailTextAtom,
   searchAtom,
   tooltipAtom,
 } from "./atoms";
@@ -21,6 +22,7 @@ export default function TopLayout() {
 
   const tooltip = useAtomValue(tooltipAtom);
   const apiData = useAtomValue(apiDataAtom);
+  const mailText = useAtomValue(mailTextAtom);
 
   return (
     <div className="flex justify-center p-2.5 gap-2.5">
@@ -33,7 +35,7 @@ export default function TopLayout() {
             setDisplay(true);
             setCompared([]);
             setSearch("");
-            sendMail("Show All Cities");
+            sendMail(mailText, "Show All Cities");
           }}
         >
           כל היישובים
@@ -44,7 +46,7 @@ export default function TopLayout() {
           className="bg-[#afeeee]"
           onClick={() => {
             setDisplay(!display);
-            sendMail(`תצוגת ${display ? "גרף" : "טבלה"}`);
+            sendMail(mailText, `תצוגת ${display ? "גרף" : "טבלה"}`);
           }}
         >
           תצוגת {!display ? "גרף" : "טבלה"}
@@ -60,7 +62,10 @@ export default function TopLayout() {
 
 export function TableTitles() {
   const [allData, setData] = useAtom(allDataAtom);
+
   const tooltip = useAtomValue(tooltipAtom);
+  const mailText = useAtomValue(mailTextAtom);
+
   const [order, setOrder] = useState(true);
 
   const orderTable = (method: string) => {
@@ -92,7 +97,7 @@ export function TableTitles() {
                 onClick={() => {
                   orderTable(header.onClick);
                   setOrder(!order);
-                  sendMail(`ארגון לפי ${header.onClick}`);
+                  sendMail(mailText, `ארגון לפי ${header.onClick}`);
                 }}
               >
                 {header.text}
@@ -107,14 +112,17 @@ export function TableTitles() {
 
 export function TableItems({ cityData }: { cityData: any }) {
   const [allData, setData] = useAtom(allDataAtom);
+
   const setCompared = useSetAtom(comparedAtom);
   const setDisplay = useSetAtom(displayAtom);
+
+  const mailText = useAtomValue(mailTextAtom);
 
   const getCity = async (city: string) => {
     setData(allData.filter((obj: any) => obj[tableData[0].onClick] === city));
     setDisplay(false);
     setCompared([]);
-    await sendMail(`לחיצה על עיר בטבלה- ${city}`);
+    await sendMail(mailText, `לחיצה על עיר בטבלה- ${city}`);
   };
 
   return (
@@ -165,11 +173,13 @@ export function TooltipWrapper({
 }
 
 export function ButtonsSearch({ city }: { city: string }) {
+  const mailText = useAtomValue(mailTextAtom);
+
   return (
     <div className="flex mt-12 justify-evenly">
       <button
         className="p-2.5 bg-[#b0e0e6] rounded-2xl"
-        onClick={() => sendMail(`נדל"ן- ${city}`)}
+        onClick={() => sendMail(mailText, `נדל"ן- ${city}`)}
       >
         <a
           href={`https://www.nadlan.gov.il/?search=${parseCity(city)}`}
@@ -180,7 +190,7 @@ export function ButtonsSearch({ city }: { city: string }) {
       </button>
       <button
         className="p-2.5 bg-[#b0e0e6] rounded-2xl"
-        onClick={() => sendMail(`גוגל- ${city}`)}
+        onClick={() => sendMail(mailText, `גוגל- ${city}`)}
       >
         <a href={`https://www.google.co.il/search?q=${city}`} target="_blank">
           חיפוש היישוב בגוגל
@@ -192,10 +202,12 @@ export function ButtonsSearch({ city }: { city: string }) {
 
 function Search() {
   const [search, setSearch] = useAtom(searchAtom);
+
   const setData = useSetAtom(allDataAtom);
   const setCompared = useSetAtom(comparedAtom);
 
   const apiData = useAtomValue(apiDataAtom);
+  const mailText = useAtomValue(mailTextAtom);
 
   const serachRef = useRef(null);
 
@@ -219,7 +231,7 @@ function Search() {
         setData(list);
       }
 
-      await sendMail(`חיפוש- ${search}`);
+      await sendMail(mailText, `חיפוש- ${search}`);
     } else {
       alert("נא להקליד יישוב בשביל לקבל תוצאה!");
     }

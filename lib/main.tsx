@@ -1,8 +1,14 @@
 import { useEffect } from "react";
 import TopLayout, { TableItems, TableTitles } from "./other-components";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { allDataAtom, apiDataAtom, displayAtom, tooltipAtom } from "./atoms";
-import { getData, sendMail } from "./utils";
+import {
+  allDataAtom,
+  apiDataAtom,
+  displayAtom,
+  tooltipAtom,
+  mailTextAtom,
+} from "./atoms";
+import { getData, getUserAgent, sendMail } from "./utils";
 import Charts from "./charts";
 
 export default function MainPage() {
@@ -10,6 +16,7 @@ export default function MainPage() {
   const [tooltip, setTooltip] = useAtom(tooltipAtom);
 
   const setAPIData = useSetAtom(apiDataAtom);
+  const setMailText = useSetAtom(mailTextAtom);
 
   const display = useAtomValue(displayAtom);
 
@@ -38,11 +45,19 @@ export default function MainPage() {
           });
         }, time);
       }
+    };
 
-      await sendMail("Site Enter");
+    const mail = async () => {
+      const resp = await getUserAgent();
+
+      if (resp) {
+        setMailText(resp);
+        sendMail(resp, "Site Enter");
+      }
     };
 
     getCities();
+    mail();
 
     // eslint-disable-next-line
   }, []);

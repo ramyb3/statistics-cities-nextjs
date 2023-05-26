@@ -8,6 +8,7 @@ import {
   allDataAtom,
   apiDataAtom,
   comparedAtom,
+  mailTextAtom,
   searchAtom,
   tooltipAtom,
 } from "./atoms";
@@ -25,6 +26,7 @@ export default function Compare() {
 
   const apiData = useAtomValue(apiDataAtom);
   const tooltip = useAtomValue(tooltipAtom);
+  const mailText = useAtomValue(mailTextAtom);
 
   const [values, setValues] = useState<OptionType[]>([]);
   const [open, setOpen] = useState(false);
@@ -73,7 +75,7 @@ export default function Compare() {
     setCompared(cities);
     setData(arr);
     setOpen(false);
-    await sendMail(`Cities To Compare ${JSON.stringify(cities)}`);
+    await sendMail(mailText, `Cities To Compare ${JSON.stringify(cities)}`);
   };
 
   return (
@@ -82,7 +84,7 @@ export default function Compare() {
         <button
           onClick={() => {
             setOpen(true);
-            sendMail("Compare Cities");
+            sendMail(mailText, "Compare Cities");
           }}
           className="bg-[#d8bfd8]"
         >

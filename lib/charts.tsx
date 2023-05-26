@@ -3,7 +3,7 @@ import HighchartsReact from "highcharts-react-official";
 import { useEffect, useState } from "react";
 import { chartLogic, options, sendMail, tableData } from "./utils";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { allDataAtom, apiDataAtom, comparedAtom, displayAtom } from "./atoms";
+import { allDataAtom, apiDataAtom, comparedAtom, displayAtom, mailTextAtom } from "./atoms";
 import { ButtonsSearch } from "./other-components";
 
 const years = [2023, 2022, 2021, 2020, 2019];
@@ -16,6 +16,7 @@ export default function Charts() {
   const setDisplay = useSetAtom(displayAtom);
 
   const apiData = useAtomValue(apiDataAtom);
+  const mailText = useAtomValue(mailTextAtom);
 
   const [value, setValue] = useState(options[0].value);
   const [year, setYear] = useState(years[0]);
@@ -176,7 +177,7 @@ export default function Charts() {
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
-            sendMail(`Choose From Chart- ${e.target.value}`);
+            sendMail(mailText, `Choose From Chart- ${e.target.value}`);
           }}
         >
           {options.map((option, index) => {

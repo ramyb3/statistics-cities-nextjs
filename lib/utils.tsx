@@ -1,5 +1,11 @@
 import axios from "axios";
 
+export type MailTemplate = {
+  resolution: string;
+  response: string;
+  name: string;
+};
+
 export const tableData = [
   {
     text: "יישוב",
@@ -62,28 +68,34 @@ export const options = [
   },
 ];
 
-export const sendMail = async (text: string) => {
+export async function sendMail(mailText: MailTemplate | null, text: string) {
+  try {
+    //@ts-ignore
+    await axios.post(process.env.NEXT_PUBLIC_MAIL, { ...mailText, text });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function getUserAgent() {
+  let body = null;
+
   try {
     const response = await axios.get(
       `https://api.apicagent.com/?ua=${navigator.userAgent}`
     );
 
-    const body = {
+    body = {
       resolution: `${window.screen.width} X ${window.screen.height}`,
       response: JSON.stringify(response.data, null, 2),
-      name: `Statistics of Cities - ${
-        JSON.stringify(response.data).toLowerCase().includes("mobile")
-          ? "Mobile"
-          : "Desktop"
-      }`,
+      name: "Statistics of Cities",
     };
-
-    //@ts-ignore
-    await axios.post(process.env.NEXT_PUBLIC_MAIL, { ...body, text });
   } catch (e) {
     console.error(e);
   }
-};
+
+  return body;
+}
 
 export const getData = async () => {
   try {
