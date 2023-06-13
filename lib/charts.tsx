@@ -3,7 +3,13 @@ import HighchartsReact from "highcharts-react-official";
 import { useEffect, useState } from "react";
 import { chartLogic, options, sendMail, tableData } from "./utils";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { allDataAtom, apiDataAtom, comparedAtom, displayAtom, mailTextAtom } from "./atoms";
+import {
+  allDataAtom,
+  apiDataAtom,
+  comparedAtom,
+  displayAtom,
+  mailTextAtom,
+} from "./atoms";
 import { ButtonsSearch } from "./other-components";
 
 const years = [2023, 2022, 2021, 2020, 2019];

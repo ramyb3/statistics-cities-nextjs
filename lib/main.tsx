@@ -70,17 +70,21 @@ export default function MainPage() {
       <TopLayout />
 
       {display ? (
-        <table className="text-center mb-2 m-auto text-lg">
-          <TableTitles />
+        allData.length === 0 ? (
+          <h2>טוען נתונים...</h2>
+        ) : (
+          <table className="text-center mb-2 m-auto text-lg">
+            <TableTitles />
 
-          {allData.map((city: any, index: number) => {
-            return (
-              <tbody key={index}>
-                <TableItems cityData={city} />
-              </tbody>
-            );
-          })}
-        </table>
+            {allData.map((city: any, index: number) => {
+              return (
+                <tbody key={index}>
+                  <TableItems cityData={city} />
+                </tbody>
+              );
+            })}
+          </table>
+        )
       ) : (
         <Charts />
       )}
