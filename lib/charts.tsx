@@ -12,7 +12,12 @@ import {
 } from "./atoms";
 import { ButtonsSearch } from "./other-components";
 
-const years = [2023, 2022, 2021, 2020, 2019];
+const years: number[] = [];
+
+for (let i = new Date(Date.now()).getFullYear(); i > 2018; i--) {
+  years.push(i);        
+}
+
 const color = "rgb(150, 53, 142)";
 
 export default function Charts() {
